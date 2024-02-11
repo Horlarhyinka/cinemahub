@@ -1,6 +1,7 @@
-import { Controller, Get, Optional, ParseIntPipe, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Optional, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
 import {MongooseModule} from "@nestjs/mongoose"
 import { MoviesService } from './movies.service';
+import { CreateMovieDto } from './dto/create-movie-dto';
 
 @Controller('movies')
 export class MoviesController {
@@ -10,7 +11,7 @@ export class MoviesController {
 
     //get 
     @Get()
-    async getMovies(@Query("Date") date?: number){
+    async GetMovies(@Query("Date") date?: number){
         let ParsedDate: Date;
         if(date){
         try{
@@ -21,11 +22,27 @@ export class MoviesController {
         }
         return ParsedDate? this.MoviesService.GetMovies(ParsedDate): this.MoviesService.GetMovies()
     }
+
+    //post /
+    @Post()
+    async NewMovie(@Body() CreateMovieDto: CreateMovieDto){
+        try{
+            return this.MoviesService.CreateMovie(CreateMovieDto)
+        }catch(err){
+            console.log({err})
+            return new HttpException(err, HttpStatus.BAD_REQUEST)
+        }
+    }
     
     //get /:id
-    //post /
+    @Get(":id")
+    async GetMovie(@Param("id") movieId: string){
+        return this.MoviesService.GetMovie(movieId)
+    }
     //delete
-    //put
-
+    @Delete(":id")
+    async DeleteMovie(@Param("id") movieId: string){
+        return this.MoviesService.DeleteMovie(movieId)
+    }
 
 }

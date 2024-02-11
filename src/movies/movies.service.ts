@@ -13,6 +13,7 @@ export class MoviesService {
         const NewMovie = await this.MovieModel.create({...CreateMovieDto, Date: new Date(CreateMovieDto.Date)})
         return NewMovie
         }catch(err){
+            console.log({err})
             throw err
         }
     }
@@ -48,5 +49,10 @@ export class MoviesService {
         movie.NumberOfTickets -= amount
         await movie.save()
         return movie
+    }
+
+    async DeleteMovie(movieId: string){
+        const deleted = await this.MovieModel.findByIdAndDelete(movieId)
+        return deleted
     }
 }

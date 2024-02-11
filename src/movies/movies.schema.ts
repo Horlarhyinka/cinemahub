@@ -13,7 +13,7 @@ export class Movie{
     @Prop({required: true})
     NumberOfTickets: number
 
-    @Prop()
+    @Prop({required: true})
     Date: Date
 }
 
