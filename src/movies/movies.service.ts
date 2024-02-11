@@ -17,11 +17,12 @@ export class MoviesService {
         }
     }
 
-    async GetMovies(DateFilter: number){
+    async GetMovies(DateFilter?: Date){
         const filtered = await this.MovieModel.find({Date: {
-            $gte: Date
+            $gte: DateFilter
         }})
         return filtered
+        
     }
 
     async GetMovie(movieId: string ){

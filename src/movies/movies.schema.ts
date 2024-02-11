@@ -14,8 +14,8 @@ export class Movie{
     NumberOfTickets: number
 
     @Prop()
-    Date: string
+    Date: Date
 }
 
 
-export const CatSchema = SchemaFactory.createForClass(Movie)
+export const MovieSchema = SchemaFactory.createForClass(Movie)
