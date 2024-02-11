@@ -3,19 +3,15 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Movie } from './movies.schema';
 import { Model } from 'mongoose';
 import { CreateMovieDto } from './dto/create-movie-dto';
+import { ErrorHandlerService } from 'src/error-handler/error-handler.service';
 import { UpdateMovieDto } from './dto/update-movie-dto';
 
 @Injectable()
 export class MoviesService {
-    constructor(@InjectModel(Movie.name) private MovieModel: Model<Movie>){}
+    constructor(@InjectModel(Movie.name) private MovieModel: Model<Movie>, private ErrorHandler: ErrorHandlerService){}
     async CreateMovie(CreateMovieDto: CreateMovieDto){
-        try{
         const NewMovie = await this.MovieModel.create({...CreateMovieDto, Date: new Date(CreateMovieDto.Date)})
         return NewMovie
-        }catch(err){
-            console.log({err})
-            throw err
-        }
     }
 
     async GetMovies(DateFilter?: Date){

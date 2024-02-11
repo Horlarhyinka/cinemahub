@@ -2,11 +2,12 @@ import { Body, Controller, Delete, Get, HttpException, HttpStatus, Optional, Par
 import {MongooseModule} from "@nestjs/mongoose"
 import { MoviesService } from './movies.service';
 import { CreateMovieDto } from './dto/create-movie-dto';
+import { ErrorHandlerService } from 'src/error-handler/error-handler.service';
 
 @Controller('movies')
 export class MoviesController {
 
-    constructor(private MoviesService: MoviesService){}
+    constructor(private MoviesService: MoviesService, private ErrorHandler: ErrorHandlerService){}
 
 
     //get 
@@ -27,10 +28,11 @@ export class MoviesController {
     @Post()
     async NewMovie(@Body() CreateMovieDto: CreateMovieDto){
         try{
-            return this.MoviesService.CreateMovie(CreateMovieDto)
+            return await this.MoviesService.CreateMovie(CreateMovieDto)
         }catch(err){
-            console.log({err})
-            return new HttpException(err, HttpStatus.BAD_REQUEST)
+            const msg = this.ErrorHandler.HandleMongooseError(err)
+            if(msg)throw new HttpException(msg, HttpStatus.BAD_REQUEST)
+
         }
     }
     
