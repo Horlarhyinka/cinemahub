@@ -11,14 +11,10 @@ export class Movie{
     Title: string
 
     @Prop({required: true})
-    TicketQuantity: number
+    NumberOfTickets: number
 
     @Prop()
-    Date: Date
-
-    @Prop()
-    Time: string
-
+    Date: string
 }
 
 

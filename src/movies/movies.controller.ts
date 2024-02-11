@@ -4,6 +4,8 @@ import {MongooseModule} from "@nestjs/mongoose"
 @Controller('movies')
 export class MoviesController {
 
+    
+
     //get /
     getMovies(){
 
