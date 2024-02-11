@@ -4,8 +4,8 @@ import { HydratedDocument } from "mongoose";
 
 export type MovieDoc = HydratedDocument<Movie>
 
-@Schema()
-class Movie{
+@Schema({timestamps: true, virtuals: true})
+export class Movie{
 
     @Prop({required: true})
     Title: string
