@@ -2,6 +2,7 @@ import { Schema, SchemaFactory, Prop } from "@nestjs/mongoose";
 import mongoose, { HydratedDocument } from "mongoose";
 import {Movie} from "../movies/movies.schema"
 
+export type ReservationDoc = HydratedDocument<Reservation>
 
 @Schema({timestamps: true, })
 export class Reservation {
@@ -14,3 +15,6 @@ export class Reservation {
     @Prop({type: mongoose.Schema.Types.ObjectId, ref: "Movie"})
     Movie: Movie
 }
+
+
+export const ReservationSchema = SchemaFactory.createForClass(Reservation)

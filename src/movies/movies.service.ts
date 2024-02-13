@@ -8,7 +8,7 @@ import { UpdateMovieDto } from './dto/update-movie-dto';
 
 @Injectable()
 export class MoviesService {
-    constructor(@InjectModel(Movie.name) private MovieModel: Model<Movie>, private ErrorHandler: ErrorHandlerService){}
+    constructor(@InjectModel(Movie.name) private MovieModel: Model<Movie>){}
     async CreateMovie(CreateMovieDto: CreateMovieDto){
         return this.MovieModel.create({...CreateMovieDto, Date: new Date(CreateMovieDto.Date)})
     }

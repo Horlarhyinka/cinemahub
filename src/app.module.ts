@@ -15,8 +15,8 @@ import { ErrorHandlerService } from './error-handler/error-handler.service';
     MongooseModule.forRoot(process.env.DB_URI), 
     ReservationModule, 
     ErrorHandlerModule,
-    MongooseModule.forRoot(process.env.DB_URL+"movies")
-
+    MongooseModule.forRoot(process.env.DB_URL+"movies"),
+    MongooseModule.forRoot(process.env.DB_URL+"reservations"),
   ],
   controllers: [AppController],
   providers: [AppService, ErrorHandlerService],

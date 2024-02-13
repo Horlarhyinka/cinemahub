@@ -1,4 +1,29 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Reservation } from './reservation.schema';
+import { Model } from 'mongoose';
 
 @Injectable()
-export class ReservationService {}
+export class ReservationService {
+    constructor(@InjectModel(Reservation.name) private ReservationModel: Model<Reservation>){}
+
+    CreateReservation(){
+
+    }
+
+    GetReserVations(){
+
+    }
+
+    GetReservation(){
+
+    }
+
+    UpdateReserVation(){
+        
+    }
+
+    DeleteReserVation(){
+
+    }
+}

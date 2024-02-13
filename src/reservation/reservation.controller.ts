@@ -1,4 +1,7 @@
 import { Controller } from '@nestjs/common';
+import { ReservationService } from './reservation.service';
 
 @Controller('reservation')
-export class ReservationController {}
+export class ReservationController {
+    constructor(private ReservatonService: ReservationService){}
+}
