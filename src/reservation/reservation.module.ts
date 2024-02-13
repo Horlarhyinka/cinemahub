@@ -7,6 +7,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 @Module({
   providers: [ReservationService],
   controllers: [ReservationController],
-  imports: [MongooseModule.forFeature([{name: Reservation.name, schema: ReservationSchema}])]
+  imports: [MongooseModule.forFeature([{name: Reservation.name, schema: ReservationSchema}])],
 })
 export class ReservationModule {}
