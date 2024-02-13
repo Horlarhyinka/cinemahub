@@ -10,33 +10,22 @@ import { UpdateMovieDto } from './dto/update-movie-dto';
 export class MoviesService {
     constructor(@InjectModel(Movie.name) private MovieModel: Model<Movie>, private ErrorHandler: ErrorHandlerService){}
     async CreateMovie(CreateMovieDto: CreateMovieDto){
-        const NewMovie = await this.MovieModel.create({...CreateMovieDto, Date: new Date(CreateMovieDto.Date)})
-        return NewMovie
+        return this.MovieModel.create({...CreateMovieDto, Date: new Date(CreateMovieDto.Date)})
     }
 
     async GetMovies(DateFilter?: Date){
-        const filtered = await this.MovieModel.find({Date: {
+        return DateFilter?this.MovieModel.find({Date: {
             $gte: DateFilter
-        }})
-        return filtered
+        }}): this.MovieModel.find({})
         
     }
 
-    async GetMovie(movieId: string ){
-        const movie = await this.MovieModel.findById(movieId)
-        if(!movie)throw Error("Movie not found")
-        return movie
+    GetMovie(movieId: string ){
+        return this.MovieModel.findById(movieId)
     }
 
-    async UpdateMovie(movieId: string, UpdateMovieDto: UpdateMovieDto){
-        try{
-
-        const updated = await this.MovieModel.findByIdAndUpdate(movieId, UpdateMovieDto, {new: true})
-            return updated
-
-        }catch(err){
-            throw err
-        }
+    UpdateMovie(movieId: string, UpdateMovieDto: UpdateMovieDto){
+        return this.MovieModel.findByIdAndUpdate(movieId, UpdateMovieDto, {new: true})
     }
 
     async PopTicket(movieId: string, amount: number){
@@ -47,8 +36,7 @@ export class MoviesService {
         return movie
     }
 
-    async DeleteMovie(movieId: string){
-        const deleted = await this.MovieModel.findByIdAndDelete(movieId)
-        return deleted
+    DeleteMovie(movieId: string){
+        return this.MovieModel.findByIdAndDelete(movieId)
     }
 }

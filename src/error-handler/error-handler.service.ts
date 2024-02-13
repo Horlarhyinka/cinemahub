@@ -7,8 +7,10 @@ export class ErrorHandlerService {
             return `${Object.keys(err.keyValues)[0]} is taken`
         }
         if(err._message?.includes("validation failed")){
-            console.log(err.errors)
-            return Object.keys(err.errors).map(error=>err.errors[error]?.properties?.message)
+            return Object.keys(err.errors).map(error=>{
+                const msg = err.errors[error]?.properties?.message
+                return msg? msg: `Invalid ${error}`
+            }).join("\n")
         }
         return null
     }

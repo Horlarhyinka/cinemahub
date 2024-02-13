@@ -9,7 +9,15 @@ import { ErrorHandlerModule } from './error-handler/error-handler.module';
 import { ErrorHandlerService } from './error-handler/error-handler.service';
 
 @Module({
-  imports: [MoviesModule, ConfigModule.forRoot(), MongooseModule.forRoot(process.env.DB_URI), ReservationModule, ErrorHandlerModule],
+  imports: [
+    MoviesModule, 
+    ConfigModule.forRoot(), 
+    MongooseModule.forRoot(process.env.DB_URI), 
+    ReservationModule, 
+    ErrorHandlerModule,
+    MongooseModule.forRoot(process.env.DB_URL+"movies")
+
+  ],
   controllers: [AppController],
   providers: [AppService, ErrorHandlerService],
 })
