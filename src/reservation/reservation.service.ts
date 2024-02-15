@@ -2,33 +2,26 @@ import { Delete, Get, Injectable, Post, Put } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Reservation } from './reservation.schema';
 import { Model } from 'mongoose';
+import { CreateReservationDto } from './dto/create-reservation-dto';
+import { GetReservationDto } from './dto/get-reservation-dto';
 
 @Injectable()
 export class ReservationService {
     constructor(@InjectModel(Reservation.name) private ReservationModel: Model<Reservation>){}
 
-    @Post()
-    CreateReservation(){
-
+    CreateReservation(CreateReservationDto: CreateReservationDto){
+        return this.ReservationModel.create(CreateReservationDto)
     }
 
-    @Get()
-    GetReservations(){
-
+    GetReservations(GetReservationDto: GetReservationDto){
+        return this.ReservationModel.find(GetReservationDto)
     }
 
-    @Get(":id")
-    GetReservation(){
-
+    GetReservation(id: string){
+        return this.ReservationModel.findById(id)
     }
 
-    @Put(":id")
-    UpdateReservation(){
-
-    }
-
-    @Delete(":id")
-    DeleteReservation(){
-        
+    DeleteReservation(id: string){
+        return this.ReservationModel.findByIdAndDelete(id)
     }
 }

@@ -7,6 +7,7 @@ import {ConfigModule } from "@nestjs/config"
 import { ReservationModule } from './reservation/reservation.module';
 import { ErrorHandlerModule } from './error-handler/error-handler.module';
 import { ErrorHandlerService } from './error-handler/error-handler.service';
+import { MiddlewaresModule } from './middlewares/middlewares.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { ErrorHandlerService } from './error-handler/error-handler.service';
     ErrorHandlerModule,
     MongooseModule.forRoot(process.env.DB_URL+"movies"),
     MongooseModule.forRoot(process.env.DB_URL+"reservations"),
+    MiddlewaresModule,
   ],
   controllers: [AppController],
   providers: [AppService, ErrorHandlerService],
