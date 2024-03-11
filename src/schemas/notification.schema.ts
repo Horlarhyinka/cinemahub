@@ -1,6 +1,7 @@
-import { Prop, Schema } from "@nestjs/mongoose";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { HydratedDocument } from "mongoose";
 import { User } from "src/user/entities/user.entity";
+import archivePlugin from "src/utils/plugins/archive.plugin";
 
 export type NotificationDoc = HydratedDocument<Notification>
 
@@ -19,3 +20,7 @@ class Notification{
     @Prop({default: false})
     archived: boolean
 }
+
+const NotificationSchema = SchemaFactory.createForClass(Notification)
+
+archivePlugin.usePlugin(NotificationSchema)

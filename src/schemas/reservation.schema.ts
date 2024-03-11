@@ -1,6 +1,7 @@
 import { Schema, SchemaFactory, Prop } from "@nestjs/mongoose";
 import mongoose, { HydratedDocument } from "mongoose";
 import {Movie} from "./movies.schema"
+import archivePlugin from "src/utils/plugins/archive.plugin";
 
 export type ReservationDoc = HydratedDocument<Reservation>
 
@@ -18,3 +19,5 @@ export class Reservation {
 
 
 export const ReservationSchema = SchemaFactory.createForClass(Reservation)
+
+archivePlugin.usePlugin(ReservationSchema)
