@@ -9,8 +9,11 @@ export class Reservation {
     @Prop({required: true, default: 1})
     Quantity: number
 
-    @Prop({type: mongoose.Schema.Types.ObjectId, ref: "Movie", required: true})
+    @Prop({type: mongoose.Schema.Types.ObjectId, ref: Movie.name, required: true})
     Movie: Movie
+
+    @Prop({default: false})
+    archived: boolean
 }
 
 

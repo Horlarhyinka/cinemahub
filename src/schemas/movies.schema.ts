@@ -15,6 +15,10 @@ export class Movie{
 
     @Prop({required: true})
     Date: Date
+
+    @Prop({default: false})
+    archived: boolean
+    
 }
 
 

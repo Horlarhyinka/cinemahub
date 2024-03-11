@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
 import bcrypt from "bcrypt"
+import archivePlugin from "../utils/plugins/archive.plugin"
 
 export enum roles{BASIC="BASIC", ADMIN="ADMIN"}
 
@@ -17,6 +18,9 @@ class User{
     @Prop({required: true, minlength: 6})
     password: string
 
+    @Prop({default: false})
+    archived: boolean
+
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)
@@ -30,3 +34,5 @@ UserSchema.pre("save", async function(){
     const hashed = await bcrypt.hash(this.password, salt)
     this.password = hashed
 })
+
+archivePlugin.usePlugin(UserSchema)
