@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Movie } from './movies.schema';
+import { Movie } from '../schemas/movies.schema';
 import { Model } from 'mongoose';
 import { CreateMovieDto } from './dto/create-movie-dto';
 import { ErrorHandlerService } from 'src/error-handler/error-handler.service';

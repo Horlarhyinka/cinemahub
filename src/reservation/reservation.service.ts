@@ -1,6 +1,6 @@
 import { Delete, Get, Injectable, Post, Put } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Reservation } from './reservation.schema';
+import { Reservation } from '../schemas/reservation.schema';
 import { Model } from 'mongoose';
 import { CreateReservationDto } from './dto/create-reservation-dto';
 import { GetReservationDto } from './dto/get-reservation-dto';

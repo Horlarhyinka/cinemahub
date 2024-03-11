@@ -8,6 +8,7 @@ import { ReservationModule } from './reservation/reservation.module';
 import { ErrorHandlerModule } from './error-handler/error-handler.module';
 import { ErrorHandlerService } from './error-handler/error-handler.service';
 import { MiddlewaresModule } from './middlewares/middlewares.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { MiddlewaresModule } from './middlewares/middlewares.module';
     MongooseModule.forRoot(process.env.DB_URL+"movies"),
     MongooseModule.forRoot(process.env.DB_URL+"reservations"),
     MiddlewaresModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService, ErrorHandlerService],
