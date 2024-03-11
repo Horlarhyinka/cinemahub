@@ -39,6 +39,12 @@ export class Event{
 
     @Prop({default: event_mode.INPERSON})
     mode: event_mode
+
+    @Prop()
+    description: string
+
+    @Prop()
+    cove: string
 }
 
 
