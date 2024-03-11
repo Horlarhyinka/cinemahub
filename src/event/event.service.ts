@@ -1,35 +1,35 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Movie } from '../schemas/movies.schema';
+import { Event } from '../schemas/event.schema';
 import { Model } from 'mongoose';
 import { CreateMovieDto } from './dto/create-movie-dto';
 import { ErrorHandlerService } from 'src/error-handler/error-handler.service';
 import { UpdateMovieDto } from './dto/update-movie-dto';
 
 @Injectable()
-export class MoviesService {
-    constructor(@InjectModel(Movie.name) private MovieModel: Model<Movie>){}
+export class EventService {
+    constructor(@InjectModel(Event.name) private Event: Model<Event>){}
     async CreateMovie(CreateMovieDto: CreateMovieDto){
-        return this.MovieModel.create({...CreateMovieDto, Date: new Date(CreateMovieDto.Date)})
+        return this.Event.create({...CreateMovieDto, Date: new Date(CreateMovieDto.Date)})
     }
 
     async GetMovies(DateFilter?: Date){
-        return DateFilter?this.MovieModel.find({Date: {
+        return DateFilter?this.Event.find({Date: {
             $gte: DateFilter
-        }}): this.MovieModel.find({})
+        }}): this.Event.find({})
         
     }
 
     GetMovie(movieId: string ){
-        return this.MovieModel.findById(movieId)
+        return this.Event.findById(movieId)
     }
 
     UpdateMovie(movieId: string, UpdateMovieDto: UpdateMovieDto){
-        return this.MovieModel.findByIdAndUpdate(movieId, UpdateMovieDto, {new: true})
+        return this.Event.findByIdAndUpdate(movieId, UpdateMovieDto, {new: true})
     }
 
     async PopTicket(movieId: string, amount: number){
-        const movie = await this.MovieModel.findById(movieId)
+        const movie = await this.Event.findById(movieId)
         if(!movie)throw Error("movie not found")
         movie.NumberOfTickets -= amount
         await movie.save()
@@ -37,6 +37,6 @@ export class MoviesService {
     }
 
     DeleteMovie(movieId: string){
-        return this.MovieModel.findByIdAndDelete(movieId)
+        return this.Event.findByIdAndDelete(movieId)
     }
 }

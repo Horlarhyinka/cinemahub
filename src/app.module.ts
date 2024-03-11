@@ -1,7 +1,7 @@
 import { Global, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { MoviesModule } from './movies/movies.module';
+import { MoviesModule } from './event/event.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import {ConfigModule } from "@nestjs/config"
 import { ReservationModule } from './reservation/reservation.module';

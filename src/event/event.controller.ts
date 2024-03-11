@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpException, HttpStatus, Optional, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
 import {MongooseModule} from "@nestjs/mongoose"
-import { MoviesService } from './movies.service';
+import { EventService } from './event.service';
 import { CreateMovieDto } from './dto/create-movie-dto';
 import { ErrorHandlerService } from 'src/error-handler/error-handler.service';
 import { UpdateMovieDto } from './dto/update-movie-dto';
@@ -8,7 +8,7 @@ import { UpdateMovieDto } from './dto/update-movie-dto';
 @Controller('movies')
 export class MoviesController {
 
-    constructor(private MoviesService: MoviesService, private ErrorHandler: ErrorHandlerService){}
+    constructor(private MoviesService: EventService, private ErrorHandler: ErrorHandlerService){}
 
 
     //get 
