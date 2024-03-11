@@ -10,7 +10,7 @@ export class Reservation {
     Quantity: number
 
     @Prop({type: mongoose.Schema.Types.ObjectId, ref: "Movie", required: true})
-    MovieId: Movie
+    Movie: Movie
 }
 
 
