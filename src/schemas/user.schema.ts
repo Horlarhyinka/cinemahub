@@ -46,6 +46,12 @@ export class User{
     @Prop({type: [mongoose.Schema.Types.ObjectId], ref: Flag.name})
     Flags: Flag[]
 
+    @Prop()
+    ResetToken: string
+
+    @Prop()
+    TokenExpiresIn: number
+
     comparePassword: (text: string)=>Promise<boolean>
 
 

@@ -1,10 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as Session from "express-session"
-import MongoStore from "connect-mongo"
+import mongoStore from "connect-mongo"
 import serverConfig from './config/server.config';
 import sessionConfig from './config/session.config';
-import cors from "cors"
+import * as cors from "cors"
 import helmet from 'helmet';
 
 async function bootstrap() {
@@ -12,7 +12,9 @@ async function bootstrap() {
 
   app.use(Session({
     secret: serverConfig.secret,
-    store: new MongoStore(sessionConfig)
+    store: mongoStore?.create(sessionConfig),
+    resave: true,
+    saveUninitialized: false
   }))
 
   app.use(cors({
