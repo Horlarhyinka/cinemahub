@@ -1,5 +1,5 @@
-import { HttpCode, HttpStatus, Injectable } from '@nestjs/common';
-import { User } from "../schemas/user.schema"
+import { HttpCode, HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { User, UserDoc } from "../schemas/user.schema"
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -10,7 +10,10 @@ export class AuthService {
         private userModel: Model<User>
     ){}
     async authenticateUser(obj: {email: string, password: string}){
-        const existingUser = this.userModel.findOne({email: obj.email})
+        const existingUser: UserDoc = await this.userModel.findOne({email: obj.email})
+        if(!existingUser)return new HttpException('user not found', HttpStatus.NOT_FOUND)
+        const passwordIsCorrect = await existingUser.comparePassword(obj.password)
+        if(!passwordIsCorrect)return new HttpException("incorrect password", HttpStatus.BAD_REQUEST)
         
     }
 }

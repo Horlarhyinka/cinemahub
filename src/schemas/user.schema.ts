@@ -46,6 +46,10 @@ export class User{
     @Prop({type: [mongoose.Schema.Types.ObjectId], ref: Flag.name})
     Flags: Flag[]
 
+    comparePassword: (text: string)=>Promise<boolean>
+
+
+
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)
