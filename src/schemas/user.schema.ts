@@ -9,7 +9,7 @@ export enum roles{BASIC="BASIC", ADMIN="ADMIN"}
 export type UserDoc = HydratedDocument<User>
 
 @Schema({timestamps: true})
-class User{
+export class User{
     @Prop({required: true, unique: true})
     Email: string
 
