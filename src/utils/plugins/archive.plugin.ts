@@ -2,31 +2,41 @@ import { Schema } from "mongoose";
 
 const usePlugin = function(schema: Schema<any>){
     schema.pre("find", function(){
-        const { archived } = this.getQuery()
-        if(!archived){
-            const qrys = this.getQuery()
-            this.setQuery({...qrys, archived: false})
-        }
+        const q = this.getQuery()
+        this.setQuery({archived: false, ...q})
     })
     
     schema.statics.findById = function(id: string, archived = false){
     return this.findOne({_id: id, archived})
     }
     
-    schema.statics.findOne = function(query: object, archived=false){
-        return this.findOne({...query, archived})
+    schema.pre("findOne", function(){
+        const q = this.getQuery()
+        this.setQuery({archived: false, ...q})
+    })
+    
+
+    schema.pre("findOneAndDelete", function(){
+        const q = this.getQuery()
+        this.setQuery({archived: false, ...q})
+    })
+
+    schema.pre("deleteOne", function(){
+        const q = this.getQuery()
+        this.setQuery({archived: false, ...q})
+    })
+
+    schema.pre("deleteMany", function(){
+        const q = this.getQuery()
+        this.setQuery({archived: false, ...q})
+    })
+    
+    schema.statics.findByIdAndDelete = function(id, archived=false){
+        return this.findOne({_id: id, archived})
     }
     
-    schema.statics.deleteOne = function(query: object, archived=false){
-        
-    }
-    
-    schema.statics.findByIdAndDelete = function(){
-    
-    }
-    
-    schema.statics.findByIdAndRemove = function(){
-        
+    schema.statics.findByIdAndRemove = function(id, archived=false){
+        return this.findOne({_id: id, archived})
     }
 
 }
