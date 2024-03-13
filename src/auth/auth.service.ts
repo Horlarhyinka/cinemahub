@@ -27,8 +27,8 @@ export class AuthService {
     }
 
     async findByResetToken(ResetToken: string){
-        return this.userModel.findOne({ResetToken, TokenExpiresInokenExpiresIn: {
-            $gte: Date.now() + 1000 * 60 * 60 * 2
+        return this.userModel.findOne({ResetToken, TokenExpiresIn: {
+            $gte: Date.now()
         }})
     }
 

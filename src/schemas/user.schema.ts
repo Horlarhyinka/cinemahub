@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { HydratedDocument } from "mongoose";
-import bcrypt from "bcrypt"
+import * as bcrypt from "bcrypt"
 import archivePlugin from "../utils/plugins/archive.plugin"
 import { Flag } from "./flag.schema";
 
@@ -43,6 +43,9 @@ export class User{
     @Prop({default: false})
     disabled: boolean
 
+    @Prop({default: false})
+    verified: boolean
+
     @Prop({type: [mongoose.Schema.Types.ObjectId], ref: Flag.name})
     Flags: Flag[]
 
@@ -61,13 +64,11 @@ export class User{
 export const UserSchema = SchemaFactory.createForClass(User)
 
 UserSchema.methods.comparePassword = function(text: string){
-    return bcrypt.compare(text, this.Password)
+    return bcrypt?.compare(text, this.Password)
 }
 
 UserSchema.pre("save", async function(){
-    const salt = await bcrypt.genSalt()
+    const salt = await bcrypt.genSalt(12)
     const hashed = await bcrypt.hash(this.Password, salt)
     this.Password = hashed
 })
-
-archivePlugin.usePlugin(UserSchema)

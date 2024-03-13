@@ -6,6 +6,6 @@ export class ForgetPasswordDto{
 
     @IsNotEmpty()
     @ApiProperty()
-    email: string
+    Email: string
     
 }

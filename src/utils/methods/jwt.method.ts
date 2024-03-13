@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken"
+import * as jwt from "jsonwebtoken"
 import serverConfig from "src/config/server.config"
 
 export const generateToken = (id: string)=>{

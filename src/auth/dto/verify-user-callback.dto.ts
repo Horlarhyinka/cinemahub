@@ -6,4 +6,8 @@ export class VerifyUserCallbackDto{
     @ApiProperty()
     @IsNotEmpty()
     code: string
+
+    @ApiProperty()
+    @IsNotEmpty()
+    email: string
 }

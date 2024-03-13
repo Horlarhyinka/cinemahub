@@ -1,23 +1,23 @@
 import { Injectable } from '@nestjs/common';
-import nodemailer from "nodemailer"
+import * as nodemailer from "nodemailer"
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
 import mailConfig, { sender_mail_address } from 'src/config/mail.config';
-import pug from "pug"
-import path from 'path';
+import * as pug from "pug"
+import * as path from 'path';
 
 @Injectable()
 export class MailService {
     transporter: nodemailer.Transporter<SMTPTransport.SentMessageInfo>
     constructor(){
         const transporter = nodemailer?.createTransport(mailConfig)
-        this.transporter = transporter
+        this.transporter = transporter!
     }
 
-    loadTemplate(path: string, data: object = {}){
-        return pug.render(path, data)
+    private loadTemplate(path: string, data: object = {}){
+        return pug.renderFile(path, data)
     }
 
-    sendMail(target: string, path: string, data: object){
+    private sendMail(target: string, path: string, data: object){
         return this.transporter.sendMail({
             to: target,
             from: sender_mail_address,
