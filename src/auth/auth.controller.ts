@@ -11,6 +11,7 @@ import { ForgetPasswordDto } from './dto/forget-password.dto';
 import { MailService } from 'src/mail/mail.service';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
+import { VerifyUserDto } from './dto/verify-user.dto';
 
 
 @Controller('auth')
@@ -66,7 +67,11 @@ export class AuthController {
     }
 
     @Get("verify")
-    async verifyUser(){
+    async verifyUser(
+        @Body() verifyUserDto: VerifyUserDto
+    ){
+        const user = await this.userModel.findOne({Email: verifyUserDto.email})
+        if(!user)return new HttpException("email not found", HttpStatus.NOT_FOUND)
         
     }
 
@@ -74,5 +79,6 @@ export class AuthController {
     async verifyUserCallback(){
 
     }
+
 }
 

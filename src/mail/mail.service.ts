@@ -28,4 +28,12 @@ export class MailService {
     sendResetTokenMail(email: string, data: {resetToken: string}){
         return this.sendMail(email, path.resolve(__dirname, "../templates/reset-token.pug"), data)
     }
+
+    sendVerificationCodeMail(email: string, data: {code: string}){
+        return this.sendMail(email, path.resolve(__dirname, "../templates/verification-code.pug"), data)
+    }
+
+    sendOnboardingMail(email: string){
+        return this.sendMail(email, path.resolve(__dirname, "../templates/onboarding.pug"), {})
+    }
 }

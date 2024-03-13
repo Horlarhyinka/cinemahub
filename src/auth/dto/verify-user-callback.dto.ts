@@ -2,8 +2,8 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty } from "class-validator";
 
 
-export class VerifyUserDto{
+export class VerifyUserCallbackDto{
     @ApiProperty()
     @IsNotEmpty()
-    email: string
+    code: string
 }
