@@ -11,6 +11,7 @@ import { MiddlewaresModule } from './middlewares/middlewares.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { MailModule } from './mail/mail.module';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { MailModule } from './mail/mail.module';
     UserModule,
     AuthModule,
     MailModule,
+    CacheModule.register()
   ],
   controllers: [AppController],
   providers: [AppService, ErrorHandlerService],
