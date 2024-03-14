@@ -14,6 +14,7 @@ import { Cache } from 'cache-manager';
 import { VerifyUserDto } from './dto/verify-user.dto';
 import { VerifyUserCallbackDto } from './dto/verify-user-callback.dto';
 import { generateCode } from "../utils/methods/generateCode.method"
+import { ResetPasswordDto } from './dto/reset-password.dto';
 
 
 @Controller('auth')
@@ -32,9 +33,9 @@ export class AuthController {
         @Body() loginDto: LoginDto,
         @Req() req: Request
     ){
-        const existingUser: UserDoc = await this.userModel.findOne({email: loginDto.email})
+        const existingUser: UserDoc = await this.userModel.findOne({Email: loginDto.Email})
         if(!existingUser)return new HttpException('user not found', HttpStatus.NOT_FOUND)
-        const passwordIsCorrect = await existingUser.comparePassword(loginDto.password)
+        const passwordIsCorrect = await existingUser.comparePassword(loginDto.Password)
         if(!passwordIsCorrect)return new HttpException("incorrect password", HttpStatus.BAD_REQUEST);
         const token = generateToken(existingUser._id.toString());
         (req.session as undefined as {token: string}).token = token
@@ -45,7 +46,7 @@ export class AuthController {
     async logout(
         @Req() req: Request
     ){
-        req.session.destroy((err)=>{ throw err })
+        req.session.destroy((err)=>{ if(err)throw err })
         return {success: true, message: "logout successful"}
     }
 
@@ -62,10 +63,15 @@ export class AuthController {
 
     @Patch("forget-password/:resetToken")
     async resetPassword(
-        @Param("resetToken") resetToken: string
+        @Param("resetToken") resetToken: string,
+        @Body() resetPasswordDto: ResetPasswordDto
     ){
         const target = await this.authService.findByResetToken(resetToken)
         if(!target)return new HttpException("user not found", HttpStatus.NOT_FOUND)
+        target.Password = resetPasswordDto.Password
+        target.ResetToken = undefined
+        target.TokenExpiresIn = undefined
+        await target.save()
         return {success: true, user: {...target.toObject(), Password: undefined}, token: generateToken(target._id.toString())}
     }
 
