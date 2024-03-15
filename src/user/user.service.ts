@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from 'src/schemas/user.schema';
+import { User, roles } from 'src/schemas/user.schema';
 import { Model } from 'mongoose';
 
 @Injectable()
@@ -14,23 +14,40 @@ export class UserService {
   ){}
 
   create(createUserDto: CreateUserDto) {
-    console.log(createUserDto)
     return this.userModel.create(createUserDto)
   }
 
   findAll() {
-    return `This action returns all user`;
+    return this.userModel.find().select("-Password");
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  findOne(id: string) {
+    return this.userModel.findById(id)
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  update(id: string, updateUserDto: UpdateUserDto) {
+    return this.userModel.findByIdAndUpdate(id, updateUserDto, {new: true})
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  remove(id: string) {
+    return this.userModel.findByIdAndDelete(id)
   }
+
+  disableUser(id: string){
+    return this.userModel.findByIdAndUpdate(id, {disabled: true}, {new: true})
+  }
+
+  enableUser(id: string){
+    return this.userModel.findByIdAndUpdate(id, {disabled: false}, {new: true})
+  }
+
+  updateUserRole(id: string, role: roles){
+    return this.userModel.findByIdAndUpdate(id, {role}, {new: true})
+  }
+
+  queryUser(query: object){
+    return this.userModel.findOne(query)
+  }
+
+
 }

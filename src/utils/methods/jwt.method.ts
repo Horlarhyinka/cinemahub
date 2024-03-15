@@ -5,6 +5,6 @@ export const generateToken = (id: string)=>{
     return jwt.sign({id}, serverConfig.secret, {expiresIn: "2d"})
 }
 
-export const verifyToken = (token: string)=>{
-    return jwt.verify(token, serverConfig.secret)
+export const verifyToken = (token: string): {id: string}=>{
+    return jwt.verify(token, serverConfig.secret) as {id: string}
 }

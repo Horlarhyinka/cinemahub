@@ -4,7 +4,7 @@ import * as bcrypt from "bcrypt"
 import archivePlugin from "../utils/plugins/archive.plugin"
 import { Flag } from "./flag.schema";
 
-export enum roles{BASIC="BASIC", ADMIN="ADMIN"}
+export enum roles{BASIC="BASIC", ADMIN="ADMIN", SUPERADMIN="SUPERADMIN"}
 
 export type UserDoc = HydratedDocument<User>
 
@@ -63,6 +63,8 @@ export class User{
 
 export const UserSchema = SchemaFactory.createForClass(User)
 
+archivePlugin.usePlugin(UserSchema)
+
 UserSchema.methods.comparePassword = function(text: string){
     return bcrypt?.compare(text, this.Password)
 }
@@ -72,3 +74,5 @@ UserSchema.pre("save", async function(){
     const hashed = await bcrypt.hash(this.Password, salt)
     this.Password = hashed
 })
+
+export const UserModel = mongoose.model(User.name, UserSchema)
